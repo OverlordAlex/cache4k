@@ -88,6 +88,20 @@ internal class RealCache<Key : Any, Value : Any>(
         }
     }
 
+    override fun getOrNull(key: Key): Value? {
+        return cacheEntries[key]?.let {
+            if (it.isExpired()) {
+                // clean up expired entries and return null
+                expireEntries()
+                null
+            } else {
+                // update eviction metadata
+                recordRead(it)
+                it.value.get()
+            }
+        }
+    }
+
     override suspend fun get(key: Key, loader: suspend () -> Value): Value {
         return cacheEntries[key]?.let {
             if (it.isExpired()) {

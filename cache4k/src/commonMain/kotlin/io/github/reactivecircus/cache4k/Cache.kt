@@ -15,6 +15,12 @@ public interface Cache<in Key : Any, Value : Any> {
     public fun get(key: Key): Value?
 
     /**
+     * Returns the value associated with [key] in this cache, or null if there is no
+     * cached value for [key].
+     */
+    public fun getOrNull(key: Key): Value?
+
+    /**
      * Returns the value associated with [key] in this cache if exists,
      * otherwise gets the value by invoking [loader], associates the value with [key] in the cache,
      * and returns the cached value.
