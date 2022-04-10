@@ -15,6 +15,14 @@ class DefaultCacheTest {
     }
 
     @Test
+    fun noEntryWithAssociatedKeyExists_getOrNull_returnsNull() {
+        val cache = Cache.Builder()
+            .build<Long, String>()
+
+        assertNull(cache.getOrNull(1))
+    }
+
+    @Test
     fun entryWithAssociatedKeyExists_get_returnsValue() {
         val cache = Cache.Builder()
             .build<Long, String>()
